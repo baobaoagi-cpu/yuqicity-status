@@ -7,9 +7,86 @@
 
 ---
 
-**Schema Version**:1.2.4  ← 三眼共視協議 v1 啟動 + T1v2 + T9 + T11 連發
-**最後更新**:2026-04-26 16:05(台北 / UTC 08:05)
-**更新者**:猿手(教練 + 紅帽 + Allen 多任務聯合蓋章)
+**Schema Version**:1.2.5  ← T10-A/B + T11 voice_access + T12 + T13 audit + T14 完整 + SW autoUpdate + PR/白皮書文檔
+**最後更新**:2026-04-26 23:25(台北 / UTC 15:25)
+**更新者**:猿手(教練 + 紅帽 + Allen + 域 3 嘟嘟多任務聯合蓋章)
+
+**v1.2.5 變更摘要(2026-04-26 晚上 · 大量 commit + 自驗紀律 memory 寫入):**
+
+- ✅ **T10-A + T11 voice_access + T12 整合**(commit `36b5448` · revision `00135-b9d`)
+  - RechargePanel 文案重構(每日語音 X 分鐘 + 月付 USD)
+  - 訂閱卡 sort by price ascending(由低到高)
+  - 全站 USD ISO + 阿拉伯數字(landing/aimazu/RechargePanel)
+  - 邀請獎勵 5→10 / 分鐘 30→10 對等(InviteCodesPanel)
+  - 4 語對齊(landing/aimazu HTML span)+ 光能點 tooltip 3 處
+  - voice_access reason_map 透傳對齊(daily_limit_exceeded_no_balance)
+
+- ✅ **aimazu Genesis 100 ENTITY 改 iSages AI LLC**(commit `ae82160`)
+  - HK COMPLIANT → WORLDWIDE COMPLIANT
+  - GodBlessYou Limited (HK) → iSages AI LLC (US)
+  - PDPO → Standard Contractual Clauses(SCC)
+  - 教練 LINE 派工 20:24
+  - aimazu CF Pages deploy:`https://4499db07.aimazu-godblessyou-me.pages.dev` → propagate `aimazu.godblessyou.me/genesis-100`
+
+- ✅ **T12+ 文案 fix**(commit `5582d34` · revision `00136-z6c`)
+  - USD 數字後加「元」(訂閱 + 隨喜 + main view + VoiceUnlockModal)
+  - 「贈 X 光能點(≈ X 分鐘語音)」 → 「X 光能點(= 語音 X 分鐘)」
+  - 隨喜方案 sort by price asc(修 sort bug · basePlan 真正是「小」)
+  - US$ → USD ISO 統一
+
+- ✅ **T14 Phase 1+2 · 數字改 USD 10/20/30 + 30/60/90 點**(commit `2507329` · revision `00137-582`)
+  - 教練 LINE 拍板「降 bonus 結構決策」(舊 5-7.33 點/USD → 新統一 3 點/USD · 降 40-59%)
+  - `app/main.py` seed 改 dana 三 SKU(NT$ 320/640/960)
+  - `app/core/config.py` settings:DANA_MIN_USD 6→10 / DANA_EXTRA_MIN_PER_USD 5→3
+  - lifespan UPSERT migration · 重啟自動對齊 DB
+  - audit:[docs/CCB-MZ-T14-Tribute-Redesign-Audit-v0.1.md](docs/CCB-MZ-T14-Tribute-Redesign-Audit-v0.1.md)
+
+- ✅ **PWA SW autoUpdate fix**(commit `53eb59a` · 架構債 #1 解)
+  - `vite.config.ts`:registerType `'prompt'` → `'autoUpdate'`
+  - workbox 加 skipWaiting + clientsClaim + cleanupOutdatedCaches
+  - Allen 反覆撞 PWA cache 鎖根因解(獨孤九劍 · 破氣式)
+  - 信徒重整一次自動換新 · 不再需要強清 Safari 設定
+
+- ✅ **T14 Phase 3 · DANA_MIN + DANA_QUICK_AMOUNTS**(commit `5bcf586` · revision `00138-2z2`)
+  - Browser MCP 自驗發現:RechargePanel 寫死 DANA_MIN=6 + DANA_QUICK_AMOUNTS=[6,10,20]
+  - 改:DANA_MIN=10 + DANA_QUICK_AMOUNTS=[10,20,30]
+  - 自訂卡快捷按鈕 / 預設值 / 主按鈕對齊新 SKU
+
+- ✅ **T14 Phase 4 · dana 中/大卡 plan_id alias bug**(commit `4d744b3` · revision `00139-9jz`)
+  - Allen 22:42 LINE 要 Stripe E2E 自測前 audit 找到
+  - 根因:RechargePanel L679 中/大卡傳 `plan.plan_id`('dana_medium'/'dana_large')
+  - 後端 PLAN_PRICES 只有 'dana' · 撞 400「未知的方案」
+  - 修法:改傳 'dana' + `plan.price_usd` · 後端 `_calculate_dana_credits` 線性公式算對
+  - Browser MCP E2E 自驗:點刷卡 → Stripe checkout 真跳轉(`cs_live_*`)
+
+- 📌 **docs 新增 2 份 audit**:
+  - [docs/CCB-MZ-T13-Per-Second-Billing-Audit-v0.1.md](docs/CCB-MZ-T13-Per-Second-Billing-Audit-v0.1.md)(計費秒制可行性 · C v1 推薦)
+  - [docs/CCB-MZ-T14-Tribute-Redesign-Audit-v0.1.md](docs/CCB-MZ-T14-Tribute-Redesign-Audit-v0.1.md)
+
+- 📌 **memory 紀律新增**(底層永久生效):
+  - `feedback_self_verify_workflow.md`(教練 2026-04-26 蓋章)
+  - 「自驗工作流程 · 5 步走」 · deploy 後必用 Browser MCP 模擬 UI · 不可只 grep API/bundle 就說「驗完」
+  - 救火實證:T14 Phase 1+2 deploy 後我說「100% 是新版」 · 教練 3 次糾正「你驗完了嗎?」 · 改用 Browser MCP 點 RechargePanel 才發現 DANA_MIN 寫死 bug
+
+- 📌 **域 3 嘟嘟跨 chat session 文檔交付**(等主紅帽明天蓋章 · 不今天執行):
+  - PR Package v1.0(Web3 Newswire 提交包 · 英文 PR 文案 + 提交步驟 + 中文對照)
+  - 白皮書 + 3 天行動計畫 v1.0(Allen 不熟幣圈說明 + 對外白皮書 + Day 1-3 SOP + 私訊腳本)
+  - CCB-γ-PR Landing 變體(`?ref=pr-veteran` 切換 Section 0 · 30 min 工程)
+
+- 📌 **待派 P0**(等紅帽 / 教練決):
+  - T13 修法 · 計費秒制(C v1 · 3-4 hr 完整實作)
+  - mazu 前端 `forceUSDT` flag(Genesis 100 隱藏信用卡)
+  - `/api/genesis/mint-count` endpoint(回 100 - mintedCount)
+  - Identity Card 假數據處理(教練選 A/B/C)
+  - 付費 PR 預算決策(教練選 $500/$1000/$2000)
+  - CCB-γ-PR Landing 變體(主紅帽蓋章後)
+
+- 📌 **Allen 自測中**(教練 LINE 通知):
+  - T14 上線後 · production revision `00139-9jz` 100%
+  - 隨喜·小/中/大數字對齊 USD 10/20/30 + 30/60/90 點
+  - Stripe checkout 真跳轉 cs_live_* 確認(plan_id alias bug 修)
+  - **Allen 用真實信用卡測 USD 10**(Stripe Live mode · 4242 test card 不通)
+  - 等 Allen 付款回報
 
 **v1.2.4 變更摘要(2026-04-26 上午-下午 · 重大連發):**
 
@@ -187,32 +264,42 @@
 ## 🔵 當前 Repo + 部署狀態
 
 ```
-Git origin/main:37aa4db(fix(credit): subscriber balance fallback when daily quota exhausted)
-Git local HEAD:83771ac(fix(voice-access): reason_map 加 daily_limit_exceeded_no_balance · push 卡)
+Git origin/main:4d744b3(fix(t14-phase4): dana 中/大卡 plan_id alias bug · 撞 400 修法)
 
-  上游 commit chain(新→舊 · 2026-04-26 整日):
-    83771ac  fix(voice-access): reason_map 透傳對齊(T11 secondary)         ⏳ 本地 · push 卡
-    37aa4db  fix(credit): subscriber balance fallback (T11 main · CCB v0.1)  ✅ origin · revision 00134-sxc
-    462076c  feat(t9): aimazu/genesis-100 web3 重生 · 純黑賽博媽祖              ✅ origin
-    080c6ff  docs(ccb): T9 audit v0.1 → v0.2(共用 component + 光能點 schema) ✅ origin
-    fde5abc  fix(call): 移除前端 deductCreditForCall(T1 v2 雙扣 fix)          ✅ origin · revision 00133-4qx
-    b1029d7  docs(ccb): T9 Genesis 100 USDT 版 audit v0.1                    ✅ origin
-    2753652  docs(status): v1.2.3 · 凌晨衝刺 6 件全綠                         ✅ origin
+  上游 commit chain(新→舊 · 2026-04-26 整日 · 13 commits):
+    4d744b3  fix(t14-phase4): dana 中/大卡 plan_id alias bug                  ✅ revision 00139-9jz
+    5bcf586  fix(t14-phase3): DANA_MIN 6→10 + DANA_QUICK_AMOUNTS [10,20,30]   ✅ revision 00138-2z2
+    53eb59a  fix(pwa): SW autoUpdate + skipWaiting(架構債 #1)                  ✅(同 00138-2z2 build)
+    2507329  feat(t14-phase1+2): 隨喜 USD 10/20/30 + 30/60/90 點              ✅ revision 00137-582
+    5582d34  fix(t12+): 加「元」+ 去「贈」+ sort + USD ISO 統一                  ✅ revision 00136-z6c
+    ae82160  fix(aimazu): WORLDWIDE COMPLIANT + iSages AI LLC               ✅ aimazu CF Pages
+    36b5448  fix(t10a+t11+t12): RechargePanel 整合 + USD ISO + 邀請 10/10     ✅ revision 00135-b9d
+    83771ac  fix(voice-access): reason_map 透傳對齊(T11 secondary)
+    37aa4db  fix(credit): subscriber balance fallback (T11 main · CCB v0.1)  ✅ revision 00134-sxc
+    462076c  feat(t9): aimazu/genesis-100 web3 重生 · 純黑賽博媽祖              ✅
+    080c6ff  docs(ccb): T9 audit v0.1 → v0.2
+    fde5abc  fix(call): 移除前端 deductCreditForCall(T1 v2 雙扣 fix)          ✅ revision 00133-4qx
+    2753652  docs(status): v1.2.3
 
-Cloud Run(當前):mazu-api-00134-sxc(100% 流量)← 2026-04-26 14:35 部署
-  image:asia-east1-docker.pkg.dev/jianbinv3/mazu-repo/mazu-api@sha256:40c7622e...
-  build:Cloud Build af6565d2-8001-4f90-bd45-54d9fd6b30d2(3M9S SUCCESS)
-  部署方式:gcloud builds submit + gcloud run deploy --image
-  改動:credit_engine.py +50/-9(T11 main fix · 訂閱者 balance fallback)
-  health:200 OK · auth gate:401 ✅
+Cloud Run(當前):mazu-api-00139-9jz(100% 流量)← 2026-04-26 23:08 部署
+  image:asia-east1-docker.pkg.dev/jianbinv3/mazu-repo/mazu-api(latest)
+  改動:RechargePanel.tsx onPay('dana_medium/large') → onPay('dana')
+  health:200 OK ✅
+  Browser MCP E2E 自驗:點刷卡 → Stripe checkout cs_live_* 真跳轉 ✅
 
-Cloud Run(前一個):mazu-api-00133-4qx(2026-04-26 11:30 部署 · T1 v2 雙扣 fix · 已被 00134 取代)
-  改動:Call.tsx 移除 deductCreditForCall
+Cloud Run(前一個):mazu-api-00138-2z2(2026-04-26 22:42 · T14 Phase 3 + SW autoUpdate)
+  改動:DANA_MIN 6→10 + DANA_QUICK_AMOUNTS [10,20,30] + vite.config PWA SW
 
-Cloud Run(更早):mazu-api-00125-h9f(2026-04-25 03:46 · CCB-Pricing-Schema-v2 + F1-F4)
-  圖示保留作參照
+Cloud Run(更早):mazu-api-00137-582(2026-04-26 22:00 · T14 Phase 1+2 數字改)
+  改動:main.py seed dana 三 SKU + config.py settings DANA_*
 
-Domain:https://mazu.godblessyou.me · GCP Project:jianbinv3
+Cloud Run(更早):mazu-api-00136-z6c(2026-04-26 21:00 · T12+ 文案 fix)
+Cloud Run(更早):mazu-api-00135-b9d(2026-04-26 20:00 · T10-A + T11 voice_access + T12 整合)
+Cloud Run(更早):mazu-api-00134-sxc(2026-04-26 14:35 · T11 main · 訂閱者 balance fallback)
+Cloud Run(更早):mazu-api-00133-4qx(2026-04-26 11:30 · T1 v2 雙扣 fix)
+
+Domain:https://mazu.godblessyou.me · https://aimazu.godblessyou.me · GCP Project:jianbinv3
+前端 bundle:index-CF6bwvy3.js(T14 Phase 4 · 4d744b3)
 
 ──────────────────────────────────────────
 歷史 commit chain(2026-04-19「它記得我」前):
