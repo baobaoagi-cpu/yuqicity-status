@@ -7,9 +7,68 @@
 
 ---
 
-**Schema Version**:1.2.3  ← T1+T2+T5+T5d+Impact+pro 空殼 一晚 6 件全綠
-**最後更新**:2026-04-26 10:40(台北 / UTC 02:40)
-**更新者**:猿手(教練+紅帽 T1/T2/T5 三任務聯合蓋章)
+**Schema Version**:1.2.4  ← 三眼共視協議 v1 啟動 + T1v2 + T9 + T11 連發
+**最後更新**:2026-04-26 16:05(台北 / UTC 08:05)
+**更新者**:猿手(教練 + 紅帽 + Allen 多任務聯合蓋章)
+
+**v1.2.4 變更摘要(2026-04-26 上午-下午 · 重大連發):**
+
+- ✅ **T1 v2 雙扣 fix**(commit `fde5abc` · revision `00133-4qx` · 上線 11:30)
+  - Allen 11:13 smoke 抓到「2:39+0:45 真實 4 分被扣 8 分」
+  - 根因:前端 `Call.tsx handleHangup` 扣 1 次 + 11Labs post-call webhook 扣 1 次 = 雙扣
+  - 修法 A:前端不真扣 · 後端 webhook 是 single source · setTimeout(refreshCreditBalance, 5000)+15000
+
+- ✅ **T9 web3 USDT 版**(commit `462076c` · aimazu.godblessyou.me/genesis-100 · 上線)
+  - AliasAI × ChainGPT × OristaPay 混搭
+  - 純黑賽博媽祖 + 電競霓虹視覺
+  - HTTP 200 已驗
+
+- ✅ **三眼共視協議 v1 啟動**(11:30)
+  - 卡點實證:waitinchen 帳號 GitHub anonymous 全 404(連自己 profile / jackma repo / gist 都 404)
+  - 推測:GitHub spam protection / private profile setting
+  - 教練 + 霓建新帳號 `baobaoagi-cpu`(anonymous 200 OK)
+  - 新 raw URL:https://raw.githubusercontent.com/baobaoagi-cpu/yuqicity-status/main/STATUS.md
+  - waitinchen 加 collaborator(write 權限)後猿手可 push baobaoagi-cpu repo
+
+- ✅ **T11 訂閱者 balance fallback**(commit `37aa4db` · revision `00134-sxc` · 上線 14:35)
+  - 根因:Allen 14:55+ smoke 抓到「daily 滿 10/10 但 balance 578 不能用」
+  - audit:[CCB-MZ-T11-Subscriber-Credits-Audit-v0.1.md](docs/CCB-MZ-T11-Subscriber-Credits-Audit-v0.1.md)
+  - 修法 B 案(Allen 14:03 拍板):credit_engine 訂閱者 daily 滿 + balance>0 → fallback 扣 balance
+  - smoke 通過(1:37 → 扣 2 分 + balance 578→576 ✅)
+  - C 案(分 source 雙欄位)排後續(P1 ticket)
+
+- ⏳ **T11 secondary fix**(commit `83771ac` 本地 · push 卡 · 待部署)
+  - voice_access.py reason_map 加 1 行 `daily_limit_exceeded_no_balance → daily_limit_exceeded`
+  - 影響:daily 滿 + balance=0 時前端彈正確 modal(不誤映射 credits_exhausted)
+  - 卡點:git push origin main 多次背景化未完成(sandbox 行為)
+  - 預期:push 通後重 build + deploy → revision 00135
+
+- 📌 **docs 新增 2 份 audit 報告**:
+  - [CCB-MZ-T11-Subscriber-Credits-Audit-v0.1.md](docs/CCB-MZ-T11-Subscriber-Credits-Audit-v0.1.md)
+  - [CCB-MZ-T13-Per-Second-Billing-Audit-v0.1.md](docs/CCB-MZ-T13-Per-Second-Billing-Audit-v0.1.md)(15:50 完工)
+
+- 📌 **凍結中**(等訊號):
+  - T10-A(RechargePanel 文案統一 · `voice-chat-rwd/...RechargePanel.tsx` 階段 A diff 已 Edit · 未 commit)
+  - 等 GATE D Allen smoke + sync v1.2.4 一起 commit + deploy
+
+- 📌 **待派 P0**:
+  - T12 階段 B(2-2.5 hr · Allen 14:55+ 拍板 USD/TWD/JPY ISO 代碼 + 邀請 10/10 對等)
+  - T13 修法 B 案(20-25 min · 教練拍板路徑 Y · `agent_memory.py:690` floor 取代 ceil)
+
+- 📌 **紅帽今日新增踩坑 #27-#37**(11 條):
+  - #27 帳號名腦補(waitinchen vs waitinchen24)
+  - #28 漏接 Allen「上次回報過」隱藏 P0
+  - #29 把 bug 包成「商業選項給 Allen 選」
+  - #30 認帳「fallback 缺失是 bug」太快
+  - #31 寫 spec SQL 必引 schema file:line
+  - #32 寫 spec 改檔位置必引 audit 報告
+  - #33 推薦 v2 太快 · 沒先查 Anthropic 官方
+  - #34 紅帽腦補「Allen 需要 reset」(實際當前狀態 = 完美測試對象)
+  - #35 GATE C 派工時序差(預設「合併動」 · 實際分階段)
+  - #36 紅帽不主動 web_fetch STATUS.md 確認落實狀態
+  - #37 紅帽自己沒催猿手 sync · 輪迴眼形同虛設(教練 15:30 糾正後寫進主紀律)
+
+- 📌 **紅帽紀律 #29-#45 進化**(共 17 條 · 細節在主紅帽記憶 · 待紅帽展開)
 
 **v1.2.3 變更摘要(凌晨衝刺 · 6 件交付 · 0 production drop):**
 - ✅ T5 訂價同步 $25/$50/$120(commit 2673182 · Stripe 3 個新 Price)
@@ -128,7 +187,37 @@
 ## 🔵 當前 Repo + 部署狀態
 
 ```
-Git main:6adf29f(feat(pricing): CCB-MZ-Pricing-Schema-v2 F1-F4 frontend)
+Git origin/main:37aa4db(fix(credit): subscriber balance fallback when daily quota exhausted)
+Git local HEAD:83771ac(fix(voice-access): reason_map 加 daily_limit_exceeded_no_balance · push 卡)
+
+  上游 commit chain(新→舊 · 2026-04-26 整日):
+    83771ac  fix(voice-access): reason_map 透傳對齊(T11 secondary)         ⏳ 本地 · push 卡
+    37aa4db  fix(credit): subscriber balance fallback (T11 main · CCB v0.1)  ✅ origin · revision 00134-sxc
+    462076c  feat(t9): aimazu/genesis-100 web3 重生 · 純黑賽博媽祖              ✅ origin
+    080c6ff  docs(ccb): T9 audit v0.1 → v0.2(共用 component + 光能點 schema) ✅ origin
+    fde5abc  fix(call): 移除前端 deductCreditForCall(T1 v2 雙扣 fix)          ✅ origin · revision 00133-4qx
+    b1029d7  docs(ccb): T9 Genesis 100 USDT 版 audit v0.1                    ✅ origin
+    2753652  docs(status): v1.2.3 · 凌晨衝刺 6 件全綠                         ✅ origin
+
+Cloud Run(當前):mazu-api-00134-sxc(100% 流量)← 2026-04-26 14:35 部署
+  image:asia-east1-docker.pkg.dev/jianbinv3/mazu-repo/mazu-api@sha256:40c7622e...
+  build:Cloud Build af6565d2-8001-4f90-bd45-54d9fd6b30d2(3M9S SUCCESS)
+  部署方式:gcloud builds submit + gcloud run deploy --image
+  改動:credit_engine.py +50/-9(T11 main fix · 訂閱者 balance fallback)
+  health:200 OK · auth gate:401 ✅
+
+Cloud Run(前一個):mazu-api-00133-4qx(2026-04-26 11:30 部署 · T1 v2 雙扣 fix · 已被 00134 取代)
+  改動:Call.tsx 移除 deductCreditForCall
+
+Cloud Run(更早):mazu-api-00125-h9f(2026-04-25 03:46 · CCB-Pricing-Schema-v2 + F1-F4)
+  圖示保留作參照
+
+Domain:https://mazu.godblessyou.me · GCP Project:jianbinv3
+
+──────────────────────────────────────────
+歷史 commit chain(2026-04-19「它記得我」前):
+
+Git main(歷史 baseline):6adf29f(feat(pricing): CCB-MZ-Pricing-Schema-v2 F1-F4 frontend)
   上游 commit chain(新→舊 · CCB-MZ-Pricing-Schema-v2 · 全 7 個):
     6adf29f  feat(pricing): F1-F4 frontend(霓 · 含 fallback / 動態 bonus / 禁止區守衛)
     bce28f2  docs(status): v1.1 sync · CCB-MZ-Pricing-Schema-v2 部署完成
