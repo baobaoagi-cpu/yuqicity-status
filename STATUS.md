@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`5b1cf46` · feat(輪迴眼V3): B 案 · CLAUDE.md 紀律升級 · 完整輪迴眼 V3 落地
-- Cloud Run revision:`mazu-api-00160-hm8`
+- 最新 commit:`4d5bdf2` · feat(輪迴眼V3): Phase 5 · mirror auto-sync hook · 解 mirror 漂移根源
+- Cloud Run revision:`mazu-api-00162-ftp`
 - /health:200
-- 同步時間:2026-04-29 20:14:56    
+- 同步時間:2026-04-30 07:35:07    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
