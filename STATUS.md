@@ -7,6 +7,20 @@
 
 ---
 
+<!-- AUTO-SYNC-START · scripts/status_sync.sh 維護 · 不要手動編輯此 block -->
+
+**🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
+
+- 最新 commit:`5b1cf46` · feat(輪迴眼V3): B 案 · CLAUDE.md 紀律升級 · 完整輪迴眼 V3 落地
+- Cloud Run revision:`mazu-api-00160-hm8`
+- /health:200
+- 同步時間:2026-04-29 20:14:56    
+
+> 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
+
+<!-- AUTO-SYNC-END -->
+
+
 **Schema Version**:1.2.5  ← T10-A/B + T11 voice_access + T12 + T13 audit + T14 完整 + SW autoUpdate + PR/白皮書文檔
 **最後更新**:2026-04-26 23:25(台北 / UTC 15:25)
 **更新者**:猿手(教練 + 紅帽 + Allen + 域 3 嘟嘟多任務聯合蓋章)
