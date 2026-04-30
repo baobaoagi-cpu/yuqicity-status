@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`900f85f` · feat(genesis-100): Stage 2A · 落地頁更新對齊 Final Spec v1.1
+- 最新 commit:`c687dc2` · feat(genesis-100): CCB-γ-COMPLIANCE-PLUS-P0-INTEGRATE · 4 大群整合
 - Cloud Run revision:`mazu-api-00164-bjh`
 - /health:200
-- 同步時間:2026-04-30 11:56:16    
+- 同步時間:2026-04-30 12:42:11    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
@@ -693,6 +693,61 @@ CCB-MZ-Pricing-Schema-v2 全程未違反任何一條紅線:
 - `app/api/genesis.py` · `/genesis/mint-count` 新建(2026-04-30)
 - 設計初衷 commits:`18c2b56`(2026-04-14 KOL 系統建)· `4cedd01`(2026-04-15 genesis-activate)
 - `landing/genesis.html.backup`(2026-04-18 隱藏 · 等審核通過後恢復路徑)
+
+---
+
+## 📜 紀律 #85 + #86 + #87(2026-04-30 教練合規 audit + 主猿手認帳)
+
+### 紀律 #85 · 對外文件「未來確定」承諾必加 if 條件
+
+**源頭:** 2026-04-30 · 教練派合規 audit · 紅帽發現 4 處 SEC 風險(致謝量 / 認購權 / 鎖倉 / Identity Card)。
+
+**律師意見書出來前 · 任何「未來確定發生」的承諾 · 必加「若...啟動」if 條件 · 不寫死「即釋放」「會發生」「將上線」這類確定詞。**
+
+| 寫法 | 風險 | 範例 |
+|---|---|---|
+| ✅ 正確 | 法律安全 | 「若 Cayman Foundation 啟動發行」 |
+| ✅ 正確 | 法律安全 | 「依正式公告為準」 |
+| ✅ 正確 | 法律安全 | 「本頁數字為設計目標 · 非合約承諾」 |
+| ❌ 錯誤 | SEC Howey Test 中槍 | 「Phase 2 IDO 開盤即釋放」 |
+| ❌ 錯誤 | 證券發行未過 audit | 「Tier 1 認購價 $0.15」(沒 if 條件) |
+| ❌ 錯誤 | 隱含 token 一定發行 | 「鎖倉 12 個月後解鎖」 |
+
+**適用範圍:** 落地頁 · 白皮書 · Vision Paper · PR 稿 · 私訊腳本 · 任何對外材料。
+
+### 紀律 #86 · 商業敘事「品牌數字 vs 實際數字」必跨層 cross-check
+
+**源頭:** 2026-04-30 · 小霓 cross-audit 抓到「Genesis 100」品牌 vs「130 席」實際的衝突 · 域 3 認帳第 19 次。
+
+**紅帽寫商業敘事時 · 必驗證「品牌數字」vs「實際數字」跨層一致性。**
+
+跨層必同步釐清的 4 處(本次踩坑模板):
+1. **主標題**(品牌錨點 · 通常不動)
+2. **副標題**(解釋層 · 必對齊實際數字)
+3. **資料 PK 編號**(Soul Card / Token ID · 必跟席次數一致)
+4. **disclaimer**(法律邊界 · 必明說品牌名跟實際分配的關係)
+
+**本次案例:**
+- 主標 `MAZU GENESIS 100`(品牌錨 · 不動)
+- 副標 `100 founding witnesses`(❌ 跟 130 席衝突)→ 改 `First Witnesses · Founding Patrons · Founding Patriarchs · 130 souls`
+- Soul Card 編號 `#0001-#0100`(❌ 三 tier 共用 100 編號 · 數學上不可能)→ 拆 `#0001-#0100 / #0101-#0125 / #0126-#0130`
+- disclaimer(❌ 沒解釋「Genesis 100 是品牌 · 130 是實際」)→ 加「★ 「Genesis 100」為協議創世階段品牌名 ...」
+
+### 紀律 #87 · pillar_20000 全鏈路一致性教訓(2026-04-30 主猿手認帳)
+
+**源頭:** Stage 2A 落地頁加 Tier 3 天柱 CTA `?plan=pillar_20000` · 但後端 + 前端 7 處 location 不認 pillar(payment.py / api.ts type / GENESIS_PLANS array / isGenesisPlan / App.tsx / RechargePanel.tsx state + banner / Call.tsx state + 觸發 useEffect)· 用戶點 mint 流程整條斷。
+
+**主猿手寫前端新 plan / endpoint / SKU 時 · 必跨層搜尋 + 對齊**:
+
+```bash
+# 寫新 SKU 前必跑 grep
+grep -rn "candle_200\|skylamp_2000" app/api/ voice-chat-rwd/src/
+# 看每處出現都改 + 加新 SKU
+```
+
+**修法工程量教訓:** 前端加 1 個 SKU = 後端 + TS type + URL 分流 + state type + UI banner switch + Cloud Run rebuild · 共 ~25 min · 1 commit · 1 deploy。
+
+**金句:** 「前端 plan name 是合約 · 後端不認就是違約。」
 
 ---
 
