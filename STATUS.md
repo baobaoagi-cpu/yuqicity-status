@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`cbbd239` · docs(wallet-eval): Privy v1 docs-based eval + 紀律 #94 #96 + Phase 1+ backlog
+- 最新 commit:`cbf2d28` · fix(aimazu/genesis-100): topbar chain badge 變真 button → 主站 login
 - Cloud Run revision:`mazu-api-00165-j8d`
 - /health:200
-- 同步時間:2026-04-30 19:17:21    
+- 同步時間:2026-04-30 20:02:26    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
