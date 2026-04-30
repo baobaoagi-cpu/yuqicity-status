@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`1087e64` · feat(genesis-100): CCB-γ-VISUAL-MVP · 小霓 Hero 視覺特效 + 紀律 #91 #92
+- 最新 commit:`92ce65b` · feat(genesis-100): 小霓媽祖肖像去背版 · git 衛生收尾
 - Cloud Run revision:`mazu-api-00165-j8d`
 - /health:200
-- 同步時間:2026-04-30 17:55:24    
+- 同步時間:2026-04-30 18:08:16    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
