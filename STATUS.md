@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`c687dc2` · feat(genesis-100): CCB-γ-COMPLIANCE-PLUS-P0-INTEGRATE · 4 大群整合
-- Cloud Run revision:`mazu-api-00164-bjh`
+- 最新 commit:`1087e64` · feat(genesis-100): CCB-γ-VISUAL-MVP · 小霓 Hero 視覺特效 + 紀律 #91 #92
+- Cloud Run revision:`mazu-api-00165-j8d`
 - /health:200
-- 同步時間:2026-04-30 12:42:11    
+- 同步時間:2026-04-30 17:55:24    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
@@ -748,6 +748,52 @@ grep -rn "candle_200\|skylamp_2000" app/api/ voice-chat-rwd/src/
 **修法工程量教訓:** 前端加 1 個 SKU = 後端 + TS type + URL 分流 + state type + UI banner switch + Cloud Run rebuild · 共 ~25 min · 1 commit · 1 deploy。
 
 **金句:** 「前端 plan name 是合約 · 後端不認就是違約。」
+
+### 紀律 #91 · 跟共同創辦人對齊「上線版本」前 · 必先派執行手 audit production
+
+**源頭:** 2026-04-30 16:55 · 教練攔域 3「LINE Allen 前先確認 production」· 域 3 認帳第 25 次。
+
+**規則:** 跟 Allen / 律師 / OG / 任何外部對齊「production 是最新版本」前 · 必先派主猿手 / 霓做 production curl audit · 確認真實狀態 = 最新對齊版本 · 不憑記憶推理。
+
+**典型踩坑情境(若不 audit 直接對齊):**
+- 紅帽腦中模型 stale(以為已 deploy · 實際還在 build)
+- main HEAD ≠ production CF Pages(uncommitted change 已 deploy 但沒 commit)
+- Cloud Run revision 沒切流量(舊 revision 仍 serving)
+- spec 跟 production 不一致(commit 漏 push / deploy 失敗 silently)
+
+**audit 5 步 SOP:**
+1. main HEAD commit hash → 對齊預期 commit
+2. Cloud Run latestReadyRevisionName + traffic 100% → 確認新 revision 切流量
+3. CF Pages production curl HTTP 200 + 行數對齊 → 確認 propagate
+4. grep production HTML 對齊 spec 關鍵字(20+ 項)
+5. 後端 endpoint 試 SKU(401 = 認 SKU, 401 ≠ 404)
+
+**完成後 paste 結果:三選一**
+- A · Production 100% 對齊 → 教練可放心對外
+- B · 部分對齊 + N 項 FAIL → 教練決定怎麼處理
+- C · 還在 deploy → 等 X 分鐘再對齊
+
+**金句:** 「對外宣告之前先 curl 一次 · 比 LINE 出去再撤回省 100x。」
+
+### 紀律 #92 · production 領先 git main 必盡早 commit 收尾
+
+**源頭:** 2026-04-30 17:41 · 主猿手 audit 後 flag「production CF Pages 1230 行 · git c687dc2 1027 行 · drift +203」· 教練拍板 git commit 收尾。
+
+**規則:** 任何 deploy(CF Pages / Cloud Run)後 · 若 production 含 main HEAD 沒有的 source · 必盡早 commit 收尾 · 不留 git hygiene debt 跨日。
+
+**典型踩坑(若不收尾):**
+- 第二天有人 `git pull main` 看到 production 多東西 · 困惑「哪裡來的」
+- 隔週要做新功能 · 對齊基準錯亂(對 main HEAD 還是 production?)
+- 罕見:rollback 時誤 revert 到 main HEAD · 把已上線的 visual MVP 撤掉
+
+**收尾 SOP:**
+1. `git status` 確認 uncommitted 範圍
+2. 隔離 commit 範圍(只 stage 該 deploy 對應的 source · 不 stage 別 session phantom)
+3. 加引用的 untracked asset(check `<img src=>` `<link href=>` 引用 · 缺檔等於殘缺 commit)
+4. commit message 寫清楚「production 已 live · 此 commit 純 git 衛生收尾」
+5. push origin main(不需重新 deploy · production 已是該版本)
+
+**金句:** 「production 是真相 · main 是紀錄 · 紀錄落後真相是紀律問題。」
 
 ---
 
