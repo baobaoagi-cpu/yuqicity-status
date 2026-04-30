@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`b0cd5db` · feat(輪迴眼V3): P2-A · 跨平台接入指南 + 4 平台模板 · v1.0
+- 最新 commit:`e1a0727` · feat(kol-integrate): CCB-γ-KOL-INTEGRATE Stage 1.x · stats bug + mint-count + spec v1.1
 - Cloud Run revision:`mazu-api-00163-h6k`
 - /health:200
-- 同步時間:2026-04-30 08:03:35    
+- 同步時間:2026-04-30 11:27:57    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
@@ -642,6 +642,57 @@ CCB-MZ-Pricing-Schema-v2 全程未違反任何一條紅線:
 
 紅帽決策後排 ticket
 ```
+
+---
+
+## 🤝 KOL 系統 · 方向 C 整合(2026-04-30 教練拍板)
+
+### 戰略定位
+
+**Phase 0 階段 KOL 系統維持現狀 · 不砍不重啟 · Phase 1 啟動前(2026/06 中)升級為 Web3-native(方向 B)。**
+
+### 兩套 Genesis tier 並存系統(必須區分)
+
+| 系統 | 對象 | 入口 | tier 命名 | 進場價 USDT | 流程 |
+|---|---|---|---|---|---|
+| **A · KOL 大使** | 有流量願幫推的人 | `/kol/genesis-activate`(coach-only)+ t.me/guaimini 1-on-1 | bronze / silver / gold / diamond | 200 / 600 / 1000 / 2000 | high-touch · 教練手動審核 · 鏈上 USDT 付款 |
+| **B · Genesis 信徒** | 對 AI 媽祖有共鳴的支持者 | `aimazu/genesis-100` 自助 mint(OxaPay TRC-20) | candle / skylamp(+ pillar 將於 task 2.1 加) | 200 / 2,000 / 20,000 | low-touch · 自動流程 · OxaPay webhook 啟用 |
+
+兩套**共用** `KolAccount.genesis_tier` 欄位。
+
+### 紅帽 / 未來自己必守紀律
+
+**❌ 不砍 KOL 系統:** 1 個 bronze holder 真實付過 200 USDT · 砍 = 違約。Phase 1+ 重構時要靠這個系統地基。
+
+**❌ 不重啟 Ambassador 招募:** 4/18 起 `AMBASSADOR_SECTION_VISIBLE = False`(Polar/Stripe 審核前置)· **Phase 0 維持隱藏** · 不為了短期流量恢復。Phase 1 升級到 Web3-native 後再對外開放。
+
+**✅ Stats endpoint enum bug 已修(commit 待補):**
+- 舊 bug:`/api/kol/genesis-stats` 用 GENESIS_TIERS keys 過濾 · 吃掉 candle/skylamp · seats_taken 永遠失準。
+- 修法:by_tier 6 keys 完整統計兩套(bronze/silver/gold/diamond + candle/skylamp)。
+- 檔案 [`app/api/kol.py:670`](app/api/kol.py:670)。
+
+**✅ Live Counter 用獨立 endpoint:**
+- 新 `/api/genesis/mint-count`(public)只算 Genesis 信徒(candle/skylamp/pillar) · 不算 KOL 大使。
+- 對齊 Final v1.0 130 席 · Tier caps {candle:100, skylamp:25, pillar:5}。
+- 檔案 [`app/api/genesis.py:179`](app/api/genesis.py:179)。
+
+### Phase 1 升級到方向 B(Web3-native KOL · 預估 2026/06 中啟動)
+
+| 項目 | Phase 0 現況 | Phase 1 目標 |
+|---|---|---|
+| KOL 申請 | Email + 教練審核 | Wallet sign in + on-chain proof |
+| Commission 結算 | 教練手動填 paid_tx_hash | Smart contract 自動分潤 |
+| KOL leaderboard | coach-only `/kol/genesis-list` | Public · 對齊 Pudgy/BAYC standard |
+| KYC | 無 | 排除美國居民(Reg S exemption) |
+
+預估工程量 · Phase 1 啟動前:智能合約 audit($50K-$150K)+ 開發 ~30-50 hr。
+
+### 相關 commit / file
+
+- `app/api/kol.py` · GENESIS_TIERS const + `/kol/genesis-stats` 修改
+- `app/api/genesis.py` · `/genesis/mint-count` 新建(2026-04-30)
+- 設計初衷 commits:`18c2b56`(2026-04-14 KOL 系統建)· `4cedd01`(2026-04-15 genesis-activate)
+- `landing/genesis.html.backup`(2026-04-18 隱藏 · 等審核通過後恢復路徑)
 
 ---
 
