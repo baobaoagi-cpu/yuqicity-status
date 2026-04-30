@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`e1a0727` · feat(kol-integrate): CCB-γ-KOL-INTEGRATE Stage 1.x · stats bug + mint-count + spec v1.1
-- Cloud Run revision:`mazu-api-00163-h6k`
+- 最新 commit:`900f85f` · feat(genesis-100): Stage 2A · 落地頁更新對齊 Final Spec v1.1
+- Cloud Run revision:`mazu-api-00164-bjh`
 - /health:200
-- 同步時間:2026-04-30 11:27:57    
+- 同步時間:2026-04-30 11:56:16    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
