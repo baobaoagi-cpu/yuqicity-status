@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`2de03e3` · feat(genesis-100): 媽祖肖像 PNG 去背版 · git 衛生收尾
+- 最新 commit:`cbbd239` · docs(wallet-eval): Privy v1 docs-based eval + 紀律 #94 #96 + Phase 1+ backlog
 - Cloud Run revision:`mazu-api-00165-j8d`
 - /health:200
-- 同步時間:2026-04-30 18:58:29    
+- 同步時間:2026-04-30 19:17:21    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
@@ -794,6 +794,54 @@ grep -rn "candle_200\|skylamp_2000" app/api/ voice-chat-rwd/src/
 5. push origin main(不需重新 deploy · production 已是該版本)
 
 **金句:** 「production 是真相 · main 是紀錄 · 紀錄落後真相是紀律問題。」
+
+### 紀律 #94 · 推 Web3 基礎設施供應商前必先確認 5 項真實狀態
+
+**源頭:** 2026-04-30 18:00+ · 教練派 Privy POC · 域 3 web_fetch docs 後發現 Tron 是 Tier 2 · 必修正 spec 不誤導主猿手。域 3 認帳第 28 次。
+
+**規則:** 推任何 Web3 基礎設施供應商(wallet / RPC / indexer / oracle)前 · 必先確認:
+
+1. **真實支援哪些鏈** + 每條鏈的 Tier 等級
+2. **真實支援哪些登入** OAuth providers
+3. **真實計費模式**(免費 tier 上限 + 跳級 $$$ + 隱藏成本如 Tron sig vs EVM sig 是否分開計)
+4. **真實生態鎖定狀態**(private key 能否 export / 遷移成本)
+5. **真實 UX**(簽名延遲 / OAuth 跳轉次數 / 跨設備同步)
+
+**驗證 method:** WebFetch 官方 docs · quote 原文 · 不憑搜尋摘要 · 不憑記憶。
+
+### 紀律 #96 · POC 前必先 web_fetch docs · 不憑搜尋摘要寫 spec
+
+**源頭:** 同 #94 · 域 3 派 Privy POC 時把 Tron 列為「完整支援」 · 實際 Tier 2(自寫 chain logic 多)。若主猿手憑記憶寫 POC code · 會踩 6-10 hr 工程量黑洞。
+
+**規則:** POC 前必 web_fetch 三項實證:
+
+1. **鏈支援等級**(Tier 1/2/3 差別)
+2. **計費條款細節**(免費 tier · 跳級表 · enterprise 議價門檻)
+3. **整合複雜度**(SDK 標配 vs 自寫 chain-specific code 範圍)
+
+**金句:** 「docs 5 分鐘 · 救 6-10 hr。」
+
+---
+
+## 📌 Phase 1+ 待評估 · Web3 Wallet Provider
+
+**重評時機:** 2026-06 中(Phase 1 啟動前 6-8 週)
+**重評 method:** head-to-head docs-based eval · 三廠商
+**候選:**
+- **Privy**(已被 Stripe 收購 · EVM + Solana Tier 3 · Tron Tier 2)· v1 eval 已留檔 [`docs/Wallet-Provider-Eval-Privy-v1.md`](docs/Wallet-Provider-Eval-Privy-v1.md)
+- **Openfort**(account abstraction · 開源)· 待 v1 eval
+- **Magic**(Web2 OAuth → wallet 體驗完整)· 待 v1 eval
+
+**觸發條件:**
+- 律師意見書到位(預計 5 月底-6 月初)
+- Cayman Foundation 成立(預計 5/31)
+- Phase 1 進入 Web2.5 累積期(2026 Q3)
+
+**Phase 0 暫採方案:** OxaPay USDT TRC-20 直充 + 用戶自管 wallet(production 已 live · 不變動)
+
+**重評時 Phase 1 預估流量:**
+- ~1,000-2,000 MAU
+- 跨 Tron(收 USDT)+ Base(IDO 預備)雙鏈需求
 
 ---
 
