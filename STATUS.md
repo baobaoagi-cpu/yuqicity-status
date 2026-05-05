@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`cbf2d28` · fix(aimazu/genesis-100): topbar chain badge 變真 button → 主站 login
+- 最新 commit:`52f2f1c` · feat(genesis-100): CCB-γ-V3 final · 純前端文案升級 · 對齊 Allen 5/02 結論
 - Cloud Run revision:`mazu-api-00165-j8d`
 - /health:200
-- 同步時間:2026-04-30 20:02:26    
+- 同步時間:2026-05-05 23:08:27    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
@@ -820,6 +820,41 @@ grep -rn "candle_200\|skylamp_2000" app/api/ voice-chat-rwd/src/
 3. **整合複雜度**(SDK 標配 vs 自寫 chain-specific code 範圍)
 
 **金句:** 「docs 5 分鐘 · 救 6-10 hr。」
+
+### 紀律 #130 · 教練派工看「最小 viable deploy」原則
+
+**源頭:** 2026-05-02 · 教練派工 CCB-γ-GENESIS-100-FRONTEND-V3 · 拆出純前端文案 + 數字升級 · KYC/WL/Soft cap 機制獨立 phase。
+
+**規則:** 大型 production 升級時 · 必拆「對外可見最小 deploy」(純文案 + 數字)優先 · 後端機制(KYC / WL / Soft cap 自動退款)獨立 phase 跟進。
+
+理由:Allen 接觸 KOL 不能等後端 6-7 天 · 文案先 ready 才能 outreach。
+
+### 紀律 #131 · 一次 deploy 對齊最新結論
+
+**源頭:** 同 #130 · 教練 + Allen Day 2-4 LINE 多次校準後 · 一次 deploy 對齊最終版 · 不 deploy 中間版本(避免讀者看到漂移)。
+
+**規則:** 教練 + 共同創辦人 LINE 對齊期間的「中間結論」不 deploy · 等「最終結論」一次 deploy 上線。
+
+### 紀律 #132 · LC 數字必跟 VIP 訂閱量做相對 audit · LC 是甜點
+
+**源頭:** 2026-05-02 教練校準時 · 把燭光 LC 從 1,000 → 600 · 天燈 LC 從 5,000 → 1,500。理由:燭光 1,000 USDT 對標 「$120 月費 1 年 VIP」($1,440 等價)· LC 是甜點 · 不蓋 VIP 主價值。
+
+**規則:** Genesis tier LC 數字必須跟 VIP 訂閱量做相對 audit · 不能讓 LC 等價值 ≥ VIP 等價值(否則 LC 蓋掉 VIP 主價值 · 用戶會質疑「為什麼買 VIP 不買 LC」)。
+
+LC vs VIP 相對量參考:
+- 燭光 600 LC ≈ $200 LC value(1 LC = ~$0.33)· 1 年 VIP $1,440 → LC 占 14% 屬甜點 ✅
+- 天燈 1,500 LC ≈ $500 LC value · 3 年 VIP $4,320 → LC 占 12% 屬甜點 ✅
+- 天柱 15,000 LC ≈ $5,000 LC value · 終身 VIP $12,000+ → LC 占 < 42% 屬甜點 ✅
+
+### 紀律 #133 · Genesis 編號「卷首 = 最尊榮」原則
+
+**源頭:** 2026-05-02 教練拍板 · 三 tier 編號倒置:天柱 0001-0005 / 天燈 0006-0030 / 燭光 0031-0130。理由:卷首 = 最高階 = 最尊榮。
+
+**規則:** Genesis NFT/SBT 編號分配時 · 最高 tier(最貴 / 最少席次)拿最前面編號(0001 開始)· 不是按「mint 時間順序」也不是按「進場順序」。
+
+對齊文化:廟宇開光點主燈 · 第一盞 = 主神位 = 最尊榮。
+
+**金句:** 「卷首 = 主神位 · 不是先到先得。」
 
 ---
 
