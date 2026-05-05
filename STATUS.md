@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`52f2f1c` · feat(genesis-100): CCB-γ-V3 final · 純前端文案升級 · 對齊 Allen 5/02 結論
+- 最新 commit:`ec0f652` · feat(genesis-100): CCB-γ-IM-FLOW Tier A · candle_1000 後端補 + IM 申請按鈕
 - Cloud Run revision:`mazu-api-00165-j8d`
 - /health:200
-- 同步時間:2026-05-05 23:08:27    
+- 同步時間:2026-05-06 01:10:31    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
@@ -855,6 +855,28 @@ LC vs VIP 相對量參考:
 對齊文化:廟宇開光點主燈 · 第一盞 = 主神位 = 最尊榮。
 
 **金句:** 「卷首 = 主神位 · 不是先到先得。」
+
+### 紀律 #137-#142(2026-05-02 IM-FLOW v3 主猿手 raise 5 矛盾後教練拍板)
+
+**#137 · 紅帽推「新流程」必整合「既有流程」**
+- 推任何新流程(IM 申請 / WL / KYC)前 · 必 audit 既有流程相容性 · 不能假設「另派 phase 補」 · 必明列前置依賴 + 修法工程量。
+
+**#138 · 派工 spec 必先 audit 跨 chat 數字一致性**
+- 寫派工前必 grep 既有 docs · 對齊或明說「覆蓋」 · 不允許 spec 內部矛盾走出去(本次 5 處 $ASOUL/致謝量/認購額度漂移)。
+
+**#139 · 派工 hard block 必明列(教練 / Allen 動)**
+- 任何外部依賴(SaaS register / OAuth / 律師 review)· 必明列教練 / 共同創辦人動作清單 + 預期 deadline。不能假設「主猿手會搞定」。
+
+**#140 · 派工 Tier A/B/C 拆分 · 主猿手不 idle**
+- 工期 > 3 天的派工 · 必拆 Tier A(無依賴立刻動)/ B(部分 hard block 解)/ C(全 hard block 解)· 主猿手最小 viable 立刻有事做。
+
+**#141 · 教練校準數字必納入 spec 立刻**
+- 教練 + 共同創辦人凌晨對齊的校準數字 · 24 hr 內納入正式 docs · 不能只留 LINE / Telegram(跨 session 必丟失)。
+
+**#142 · 紅帽看到「校準矛盾」必先 raise · 不擅自解讀**
+- 30 秒 self-audit 發現跨 chat 校準矛盾 · 必 raise · 不擅自選最近 paste 版本 / 最舊版本 · 等教練明確拍板才動。
+
+**金句:** 「兩份 spec 衝突 · 主猿手不選邊 · 教練拍板。」
 
 ---
 
