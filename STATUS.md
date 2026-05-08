@@ -11,10 +11,10 @@
 
 **🤖 Auto-sync 最新狀態**(post-commit hook 自動更新 · scripts/status_sync.sh):
 
-- 最新 commit:`ec0f652` · feat(genesis-100): CCB-γ-IM-FLOW Tier A · candle_1000 後端補 + IM 申請按鈕
-- Cloud Run revision:`mazu-api-00165-j8d`
+- 最新 commit:`15d5b64` · docs(genesis-130): NDA v0.1 DRAFT 中英對照(主猿手代寫 · 待律師 review)
+- Cloud Run revision:`mazu-api-00166-g2t`
 - /health:200
-- 同步時間:2026-05-06 01:10:31    
+- 同步時間:2026-05-08 19:06:42    
 
 > 注意:本 block 由腳本維護 · 紅帽/陳都靈手寫的 Schema Version / v1.x.x 變更摘要 / 踩坑紀錄 / P0 清單 不在此 block · 不會被覆蓋。
 
